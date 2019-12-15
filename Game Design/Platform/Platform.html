@@ -1,0 +1,573 @@
+<html>
+<head>
+<title> Platform Game </title>
+<script src="https://simplycodingcourses.com/files/simply.js"></script>
+<script>
+var level = [];
+function start(){
+sjs.open("target",800,500);
+var background = new sjs.Image("Images/background.png");
+background.setSize(2500, 500);
+
+//Background Music
+var playM = new Audio('Music/ova.mp3');
+var toggle = true;
+var musicOn = false;
+sjs.keyDown(SPACE_KEY, function(){
+if(toggle == true){
+if(musicOn == false){
+playM.play();
+musicOn = true;
+} else {
+playM.pause();
+musicOn = false;
+}
+toggle = false;
+setTimeout(function(){
+toggle = true;
+},1000);
+} //end if toggle statement
+}); //end keyDown function
+
+var testBtn = new sjs.Button("Test", function(){
+localStorage.setItem('level', sjs.saveImageArray(level));
+window.open('test.html', '_blank');
+});
+
+var showBtn = new sjs.Button("Show", function(){
+var output = document.querySelector("#output");
+output.innerHTML = sjs.saveImageArray(level);
+});
+
+showBtn.offset(75, 0);
+
+//Player Properties
+var player = new sjs.Image("Images/r_idle.png");
+player.type = "player";
+player.setSize(85,93);
+player.setGravity(3);
+player.bottom();
+player.friction = .3;
+sjs.scrollable(player,background);
+
+//Player movement controls
+var r_images = ["Images/r_walk-0.png", "Images/r_walk-1.png", "Images/r_walk-2.png", "Images/r_walk-3.png", "Images/r_walk-4.png", "Images/r_walk-5.png", "Images/r_walk-6.png", "Images/r_walk-7.png"];
+
+var l_images = ["Images/l_walk-0.png", "Images/l_walk-1.png", "Images/l_walk-2.png", "Images/l_walk-3.png", "Images/l_walk-4.png", "Images/l_walk-5.png", "Images/l_walk-6.png", "Images/l_walk-7.png"];
+
+var r_facing = true;
+var r_track = 0;
+var l_track = 0;
+
+sjs.keyDown(RIGHT_KEY, function(){
+r_facing = true;
+r_track = r_track + 1;
+player.pushRight(2);
+player.setImage(r_images[r_track]);
+if(r_track == 7){
+r_track = 0;
+}
+if(r_track >= 8){
+player.setImage("Images/r_jump.png");
+}
+}); //end Right key
+
+sjs.keyDown(LEFT_KEY, function(){
+r_facing = false;
+l_track = l_track + 1
+player.pushLeft(2);
+player.setImage(l_images[l_track]);
+if(l_track == 7){
+l_track = 0;
+}
+if(l_track >= 8){
+player.setImage("Images/l_jump.png");
+}
+}); //end Left key
+
+//Jumping Code
+var canJump = true;
+sjs.keyDown(UP_KEY, function(){
+if(canJump == true){
+canJump = false;
+player.pushUp(55);
+} //end if statement
+if(r_facing == true){
+player.setImage("Images/r_jump.png");
+r_track = 8;
+} else {
+player.setImage("Images/l_jump.png");
+l_track = 8
+}
+}); //end keyDown function
+
+window.addEventListener("keyup", function(e){
+if(e.keyCode == RIGHT_KEY){
+player.setImage("Images/r_idle.png");
+r_track = 0
+} else if (e.keyCode == LEFT_KEY){
+player.setImage("Images/l_idle.png");
+l_track = 0;
+} //end if statement
+}); //end EventListener function
+
+//Player2 Properties
+var player2 = new sjs.Image("Images/r_idle2.png");
+player2.type = "player2";
+player2.setSize(85,93);
+player2.setGravity(3);
+player2.bottom();
+player2.friction = .3;
+sjs.scrollable(player2,background);
+
+//Player2 movement controls
+var r_images = ["Images/r_walk-0.png", "Images/r_walk-1.png", "Images/r_walk-2.png", "Images/r_walk-3.png", "Images/r_walk-4.png", "Images/r_walk-5.png", "Images/r_walk-6.png", "Images/r_walk-7.png"];
+
+var l_images = ["Images/l_walk-0.png", "Images/l_walk-1.png", "Images/l_walk-2.png", "Images/l_walk-3.png", "Images/l_walk-4.png", "Images/l_walk-5.png", "Images/l_walk-6.png", "Images/l_walk-7.png"];
+
+var r_facing = true;
+var r_track = 0;
+var l_track = 0;
+
+sjs.keyDown(J_KEY, function(){
+r_facing = true;
+r_track = r_track + 1;
+player2.pushRight(2);
+player2.setImage(r_images[r_track]);
+if(r_track == 7){
+r_track = 0;
+}
+if(r_track >= 8){
+player2.setImage("Images/r_jump.png");
+}
+}); //end Right key
+
+sjs.keyDown(F_KEY, function(){
+r_facing = false;
+l_track = l_track + 1
+player2.pushLeft(2);
+player2.setImage(l_images[l_track]);
+if(l_track == 7){
+l_track = 0;
+}
+if(l_track >= 8){
+player2.setImage("Images/l_jump.png");
+}
+}); //end Left key
+
+//Jumping Code
+var canJump = true;
+sjs.keyDown(Y_KEY, function(){
+if(canJump == true){
+canJump = false;
+player2.pushUp(55);
+} //end if statement
+if(r_facing == true){
+player2.setImage("Images/r_jump.png");
+r_track = 8;
+} else {
+player2.setImage("Images/l_jump.png");
+l_track = 8
+}
+}); //end keyDown function
+
+window.addEventListener("keyup", function(e){
+if(e.keyCode == J_KEY){
+player2.setImage("Images/r_idle.png");
+r_track = 0
+} else if (e.keyCode == F_KEY){
+player2.setImage("Images/l_idle.png");
+l_track = 0;
+} //end if statement
+}); //end EventListener function
+
+//onHit functions
+sjs.onHit("player","platform", function(x,y){
+sjs.stoppedBy(x,y);
+if(canJump == false && x.y < y.y-85){
+canJump = true;
+r_track = 0;
+l_track = 0;
+}
+});
+
+sjs.onHit("player","bottom_screen",function(x,y){
+sjs.stoppedBy(x,y);
+if(canJump == false){
+canJump = true;
+r_track = 0;
+l_track = 0;
+}
+});
+
+sjs.onHit("player",["right_screen","left_screen","top_screen"],function(x,y){
+sjs.stoppedBy(x,y);
+player.noBounds = true;
+});
+
+sjs.onHit("enemy",["left_screen","right_screen"], function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("gunenemy",["left_screen","right_screen"], function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("enemy","platform", function(x,y){
+if(x.isAboveOf(y) == true){
+sjs.stoppedBy(x,y);
+} else {
+sjs.bounceOff(x,y);
+}
+});
+
+sjs.onHit("player","jump_pad", function(x,y){
+if(x.isAboveOf(y) == true){
+player.pushUp(50);
+} else {
+sjs.stoppedBy(x,y);
+}
+});
+
+sjs.onHit("trash",["platform","jump_pad", "powerUp","score","enemy","flag","block","tank", "spike", "spikes", "lava", "gunenemy", "bouncy", "powerUp2"], function(x,y){
+y.destroy();
+sjs.removeFromArray(level,y);
+});
+
+sjs.onHit("enemy","bottom_screen", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("gunenemy","bottom_screen", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("tank","bottom_screen", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("tank",["left_screen","right_screen"], function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("player",["player","tank"], function(x,y){
+player.pushUp(50);
+});
+
+sjs.onHit("player2",["player2","tank"], function(x,y){
+player.pushUp(50);
+});
+
+sjs.onHit("powerup","block", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("block","lava", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("powerup","lava", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("lava","lava", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("score","lava", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("platform","lava", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("platform","block", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("player","block", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("spike","block", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("player","bouncy", function(x,y){
+player.pushUp(10);
+});
+
+sjs.onHit("spikes","block", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("block","block", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("tank","block", function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("tank","bouncy", function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("enemy","bouncy", function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("enemy","block", function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("gunenemy","bouncy", function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("gunenemy","block", function(x,y){
+sjs.bounceOff(x,y);
+});
+
+var trash = new sjs.Text("Trash",15,"orange");
+trash.type = "trash";
+trash.moveTo(720,10);
+trash.fixed = true;
+trash.setHeight(60);
+trash.node.style.background = "grey";
+trash.node.style.borderTop = "4px solid blue";
+} //end start
+
+//Platform Function
+
+function platform(){
+var platform = new sjs.Image("Images/platform.png");
+level.push(platform);
+platform.type = "platform";
+platform.setHeight(30);
+platform.center().offset(-sjs.gx,10);
+platform.onMouseDown(function(){
+platform.draggable();
+platform.follow(sjs.mouse);
+});
+}
+
+function block(){
+var block = new sjs.Image("Images/block.png");
+level.push(block);
+block.type = "block";
+block.setHeight(30);
+block.center().offset(-sjs.gx,10);
+block.onMouseDown(function(){
+block.draggable();
+block.follow(sjs.mouse);
+});
+}
+
+function spike(){
+var spike = new sjs.Image("Images/spike.png");
+level.push(spike);
+spike.type = "spike";
+spike.setHeight(30);
+spike.center().offset(-sjs.gx,10);
+spike.onMouseDown(function(){
+spike.draggable();
+spike.follow(sjs.mouse);
+});
+}
+
+function lava(){
+var lava = new sjs.Image("Images/lava.png");
+level.push(lava);
+lava.type = "lava";
+lava.setHeight(30);
+lava.center().offset(-sjs.gx,10);
+lava.onMouseDown(function(){
+lava.draggable();
+lava.follow(sjs.mouse);
+});
+}
+
+function spikes(){
+var spikes = new sjs.Image("Images/spikes.png");
+level.push(spikes);
+spikes.type = "spikes";
+spikes.setHeight(30);
+spikes.center().offset(-sjs.gx,10);
+spikes.onMouseDown(function(){
+spikes.draggable();
+spikes.follow(sjs.mouse);
+});
+}
+
+function bouncy(){
+var bouncy = new sjs.Image("Images/bouncy.png");
+level.push(bouncy);
+bouncy.type = "bouncy";
+bouncy.setHeight(30);
+bouncy.center().offset(-sjs.gx,10);
+bouncy.onMouseDown(function(){
+bouncy.draggable();
+bouncy.follow(sjs.mouse);
+});
+}
+
+function powerUp(){
+var powerUp = new sjs.Image("Images/power_up.png");
+level.push(powerUp);
+powerUp.type = "powerUp";
+powerUp.setHeight(30);
+powerUp.center().offset(-sjs.gx,10);
+powerUp.onMouseDown(function(){
+powerUp.draggable();
+powerUp.follow(sjs.mouse);
+});
+}
+
+function powerUp2(){
+var powerUp2 = new sjs.Image("Images/power_up2.png");
+level.push(powerUp2);
+powerUp2.type = "powerUp2";
+powerUp2.setHeight(30);
+powerUp2.center().offset(-sjs.gx,10);
+powerUp2.onMouseDown(function(){
+powerUp2.draggable();
+powerUp2.follow(sjs.mouse);
+});
+}
+
+function score(){
+var score = new sjs.Image("Images/score.gif");
+level.push(score);
+score.type = "score";
+score.setHeight(30);
+score.center().offset(-sjs.gx,10);
+score.onMouseDown(function(){
+score.draggable();
+score.follow(sjs.mouse);
+});
+}
+
+function flag(){
+var flag = new sjs.Image("Images/flag_bad.png");
+level.push(flag);
+flag.type = "flag";
+flag.setHeight(80);
+flag.center().offset(-sjs.gx,10);
+flag.onMouseDown(function(){
+flag.draggable();
+flag.follow(sjs.mouse);
+});
+}
+
+function tank(){
+var tank = new sjs.Image("Images/tank_r.png");
+level.push(tank);
+level.push(tank);
+tank.type = "tank";
+tank.center().offset(-sjs.gx,10);
+tank.friction = 0;
+tank.noBounds = true;
+tank.setHFlipImages("Images/tank_l.png","Images/tank_r.png");
+tank.onMouseDown(function(){
+tank.follow(sjs.mouse);
+tamk.removeGravity();
+tank.stop();
+});
+tank.onMouseUp(function(){
+tank.unfollow(sjs.mouse);
+tank.setGravity();
+tank.pushHFacing();
+tank.accel=.5;
+});
+} //end tank function
+
+function enemy(){
+var enemy = new sjs.Image("Images/r_enemy.gif");
+level.push(enemy);
+level.push(enemy);
+enemy.type = "enemy";
+enemy.center().offset(-sjs.gx,10);
+enemy.friction = 0;
+enemy.noBounds = true;
+enemy.setHFlipImages("Images/l_enemy.gif","Images/r_enemy.gif");
+enemy.onMouseDown(function(){
+enemy.follow(sjs.mouse);
+enemy.removeGravity();
+enemy.stop();
+});
+enemy.onMouseUp(function(){
+enemy.unfollow(sjs.mouse);
+enemy.setGravity();
+enemy.pushHFacing();
+enemy.accel=.5;
+});
+} //end enemy function
+
+function gunenemy(){
+var gunenemy = new sjs.Image("Images/r_gunenemy.gif");
+level.push(gunenemy);
+level.push(gunenemy);
+gunenemy.type = "gunenemy";
+gunenemy.center().offset(-sjs.gx,10);
+gunenemy.friction = 0;
+gunenemy.noBounds = true;
+gunenemy.setHFlipImages("Images/l_gunenemy.gif","Images/r_gunenemy.gif");
+gunenemy.onMouseDown(function(){
+gunenemy.follow(sjs.mouse);
+gunenemy.removeGravity();
+gunenemy.stop();
+});
+gunenemy.onMouseUp(function(){
+gunenemy.unfollow(sjs.mouse);
+gunenemy.setGravity();
+gunenemy.pushHFacing();
+gunenemy.accel=.7;
+});
+} //end enemy function
+
+function jumpPad(){
+var jump_pad = new sjs.Image("Images/jump_pad.png");
+level.push(jump_pad);
+jump_pad.type = "jump_pad";
+jump_pad.center().offset(-sjs.gx,10);
+jump_pad.setHeight(15);
+jump_pad.onMouseDown(function(){
+jump_pad.draggable();
+jump_pad.follow(sjs.mouse);
+});
+}
+
+</script>
+
+</script>
+</head>
+<body onload="start()">
+<h1> Platform Game </h1>
+
+<center>
+<input type="image" src="Images/platform.png" onclick="platform()">
+<input type="image" src="Images/power_up.png" onclick="powerUp()">
+<input type="image" src="Images/score.gif" onclick="score()">
+<input type="image" src="Images/flag_bad.png" onclick="flag()">
+<input type="image" src="Images/r_enemy.gif" onclick="enemy()">
+<input type="image" src="Images/jump_pad.png" onclick="jumpPad()">
+<input type="image" src="Images/tank_r.png" onclick="tank()">
+<input type="image" src="Images/block.png" onclick="block()">
+<input type="image" src="Images/spike.png" onclick="spike()">
+<input type="image" src="Images/spikes.png" onclick="spikes()">
+<input type="image" src="Images/bouncy.png" onclick="bouncy()">
+<input type="image" src="Images/lava.png" onclick="lava()">
+<input type="image" src="Images/r_gunenemy.gif" onclick="gunenemy()">
+<input type="image" src="Images/power_up2.png" onclick="powerUp2()">
+</center>
+
+<div id="target" style="margin:auto;background:grey;"></div>
+
+<br/>
+<div id="output" style="margin:0 50 0 50;"></div>
+<br/><br/>
+
+</body>
+</html>

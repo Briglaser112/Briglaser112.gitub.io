@@ -1,0 +1,461 @@
+<html>
+<head>
+<title> Platform Game </title>
+<script src="https://simplycodingcourses.com/files/simply.js"></script>
+<script>
+var level = [];
+function start(){
+sjs.open("target",800,500);
+var background = new sjs.Image("Images/background.png");
+background.setSize(2500, 500);
+
+sjs.loadImageArray('[{"width":32,"height":32,"x":2148.5,"y":468,"sx":1.5,"sy":1,"ay":1,"topSpeed":10,"src":"Images/tank_r.png","alt":"add text","type":"tank","facingLeft":false,"left_img":"Images/tank_l.png","right_img":"Images/tank_r.png","friction":0,"classType":"Image","noBounds":true},{"width":32,"height":32,"x":2148.5,"y":468,"sx":1.5,"sy":1,"ay":1,"topSpeed":10,"src":"Images/tank_r.png","alt":"add text","type":"tank","facingLeft":false,"left_img":"Images/tank_l.png","right_img":"Images/tank_r.png","friction":0,"classType":"Image","noBounds":true},{"width":30,"height":30,"x":368,"y":470,"sx":0,"sy":0,"topSpeed":10,"src":"Images/block.png","alt":"add text","type":"block","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":368,"y":440,"sx":0,"sy":0,"topSpeed":10,"src":"Images/block.png","alt":"add text","type":"block","friction":0.05,"classType":"Image"},{"width":82,"height":93,"x":1683,"y":407,"sx":-5,"sy":1,"ay":1,"topSpeed":10,"src":"Images/l_enemy.gif","alt":"add text","type":"enemy","facingLeft":true,"left_img":"Images/l_enemy.gif","right_img":"Images/r_enemy.gif","friction":0,"classType":"Image","noBounds":true},{"width":82,"height":93,"x":1683,"y":407,"sx":-5,"sy":1,"ay":1,"topSpeed":10,"src":"Images/l_enemy.gif","alt":"add text","type":"enemy","facingLeft":true,"left_img":"Images/l_enemy.gif","right_img":"Images/r_enemy.gif","friction":0,"classType":"Image","noBounds":true},{"width":50,"height":30,"x":394,"y":16,"sx":0,"sy":0,"topSpeed":10,"src":"Images/spikes.png","alt":"add text","type":"spikes","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":253,"y":364,"sx":0,"sy":0,"topSpeed":10,"src":"Images/block.png","alt":"add text","type":"block","friction":0.05,"classType":"Image"},{"width":136,"height":30,"x":348,"y":305,"sx":0,"sy":0,"topSpeed":10,"src":"Images/platform.png","alt":"add text","type":"platform","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":595,"y":286,"sx":0,"sy":0,"topSpeed":10,"src":"Images/block.png","alt":"add text","type":"block","friction":0.05,"classType":"Image"},{"width":50,"height":30,"x":584,"y":256,"sx":0,"sy":0,"topSpeed":10,"src":"Images/spike.png","alt":"add text","type":"spike","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":513,"y":285,"sx":0,"sy":0,"topSpeed":10,"src":"Images/bouncy.png","alt":"add text","type":"bouncy","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":671,"y":292,"sx":0,"sy":0,"topSpeed":10,"src":"Images/block.png","alt":"add text","type":"block","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":676.1889514761389,"y":264,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":667.1889514761389,"y":266,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":684.1889514761389,"y":263,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":785.6889514761389,"y":282,"sx":0,"sy":0,"topSpeed":10,"src":"Images/bouncy.png","alt":"add text","type":"bouncy","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":814.6889514761389,"y":282,"sx":0,"sy":0,"topSpeed":10,"src":"Images/bouncy.png","alt":"add text","type":"bouncy","friction":0.05,"classType":"Image"},{"width":66,"height":15,"x":780.1889514761389,"y":264.5,"sx":0,"sy":0,"topSpeed":10,"src":"Images/jump_pad.png","alt":"add text","type":"jump_pad","friction":0.05,"classType":"Image"},{"width":50,"height":30,"x":795.6889514761389,"y":2,"sx":0,"sy":0,"topSpeed":10,"src":"Images/spikes.png","alt":"add text","type":"spikes","friction":0.05,"classType":"Image"},{"width":21,"height":30,"x":812.1889514761389,"y":56,"sx":0,"sy":0,"topSpeed":10,"src":"Images/power_up.png","alt":"add text","type":"powerUp","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":776.1889514761389,"y":53,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":843.1889514761389,"y":54,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":934.6298547255442,"y":215,"sx":0,"sy":0,"topSpeed":10,"src":"Images/block.png","alt":"add text","type":"block","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":1036.6298547255442,"y":160,"sx":0,"sy":0,"topSpeed":10,"src":"Images/block.png","alt":"add text","type":"block","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":1130.6298547255442,"y":107,"sx":0,"sy":0,"topSpeed":10,"src":"Images/block.png","alt":"add text","type":"block","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":1255.5703657226086,"y":244,"sx":0,"sy":0,"topSpeed":10,"src":"Images/bouncy.png","alt":"add text","type":"bouncy","friction":0.05,"classType":"Image"},{"width":50,"height":30,"x":1191.5703657226086,"y":466,"sx":0,"sy":0,"topSpeed":10,"src":"Images/spike.png","alt":"add text","type":"spike","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":1430.5703657226086,"y":191,"sx":0,"sy":0,"topSpeed":10,"src":"Images/bouncy.png","alt":"add text","type":"bouncy","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":1590.5703657226086,"y":243,"sx":0,"sy":0,"topSpeed":10,"src":"Images/bouncy.png","alt":"add text","type":"bouncy","friction":0.05,"classType":"Image"},{"width":50,"height":30,"x":1512.5703657226086,"y":470,"sx":0,"sy":0,"topSpeed":10,"src":"Images/spike.png","alt":"add text","type":"spike","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":1262.217443677948,"y":211,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":1440.217443677948,"y":165,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":1597.217443677948,"y":214,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":136,"height":30,"x":1687.717443677948,"y":281,"sx":0,"sy":0,"topSpeed":10,"src":"Images/platform.png","alt":"add text","type":"platform","friction":0.05,"classType":"Image"},{"width":21,"height":30,"x":1738.217443677948,"y":252,"sx":0,"sy":0,"topSpeed":10,"src":"Images/power_up.png","alt":"add text","type":"powerUp","friction":0.05,"classType":"Image"},{"width":82,"height":93,"x":1350,"y":407,"sx":5,"sy":0,"ay":1,"topSpeed":10,"src":"Images/r_enemy.gif","alt":"add text","type":"enemy","facingLeft":false,"left_img":"Images/l_enemy.gif","right_img":"Images/r_enemy.gif","friction":0,"classType":"Image","noBounds":true},{"width":82,"height":93,"x":1350,"y":407,"sx":5,"sy":0,"ay":1,"topSpeed":10,"src":"Images/r_enemy.gif","alt":"add text","type":"enemy","facingLeft":false,"left_img":"Images/l_enemy.gif","right_img":"Images/r_enemy.gif","friction":0,"classType":"Image","noBounds":true},{"width":136,"height":30,"x":1921.7758596585518,"y":221,"sx":0,"sy":0,"topSpeed":10,"src":"Images/platform.png","alt":"add text","type":"platform","friction":0.05,"classType":"Image"},{"width":50,"height":30,"x":1918.7758596585518,"y":195,"sx":0,"sy":0,"topSpeed":10,"src":"Images/spike.png","alt":"add text","type":"spike","friction":0.05,"classType":"Image"},{"width":50,"height":30,"x":2018.7758596585518,"y":192,"sx":0,"sy":0,"topSpeed":10,"src":"Images/spike.png","alt":"add text","type":"spike","friction":0.05,"classType":"Image"},{"width":30,"height":30,"x":1977.7758596585518,"y":192,"sx":0,"sy":0,"topSpeed":10,"src":"Images/bouncy.png","alt":"add text","type":"bouncy","friction":0.05,"classType":"Image"},{"width":66,"height":15,"x":2178.275859658552,"y":335.5,"sx":0,"sy":0,"topSpeed":10,"src":"Images/jump_pad.png","alt":"add text","type":"jump_pad","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":2285.5,"y":157,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":2287.5,"y":185,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":2286.5,"y":223,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":25,"height":30,"x":2287.5,"y":126,"sx":0,"sy":0,"topSpeed":10,"src":"Images/score.gif","alt":"add text","type":"score","friction":0.05,"classType":"Image"},{"width":50,"height":30,"x":2278,"y":2,"sx":0,"sy":0,"topSpeed":10,"src":"Images/spikes.png","alt":"add text","type":"spikes","friction":0.05,"classType":"Image"},{"width":136,"height":30,"x":2331,"y":174,"sx":0,"sy":0,"topSpeed":10,"src":"Images/platform.png","alt":"add text","type":"platform","friction":0.05,"classType":"Image"},{"width":31,"height":80,"x":2385.5,"y":98,"sx":0,"sy":0,"topSpeed":10,"src":"Images/flag_bad.png","alt":"add text","type":"flag","friction":0.05,"classType":"Image"}]');
+
+//Player Properties
+var player = new sjs.Image("Images/r_idle.png");
+player.type = "player";
+player.setSize(85,93);
+player.setGravity(3);
+player.bottom();
+player.friction = .3;
+sjs.scrollable(player,background);
+
+//Player movement controls
+var r_images = ["Images/r_walk-0.png", "Images/r_walk-1.png", "Images/r_walk-2.png", "Images/r_walk-3.png", "Images/r_walk-4.png", "Images/r_walk-5.png", "Images/r_walk-6.png", "Images/r_walk-7.png"];
+
+var l_images = ["Images/l_walk-0.png", "Images/l_walk-1.png", "Images/l_walk-2.png", "Images/l_walk-3.png", "Images/l_walk-4.png", "Images/l_walk-5.png", "Images/l_walk-6.png", "Images/l_walk-7.png"];
+
+var r_facing = true;
+var r_track = 0;
+var l_track = 0;
+
+sjs.keyDown(RIGHT_KEY, function(){
+r_facing = true;
+r_track = r_track + 1;
+player.pushRight(2);
+player.setImage(r_images[r_track]);
+if(r_track == 7){
+r_track = 0;
+}
+if(r_track >= 8){
+player.setImage("Images/r_jump.png");
+}
+}); //end Right key
+
+sjs.keyDown(LEFT_KEY, function(){
+r_facing = false;
+l_track = l_track + 1
+player.pushLeft(2);
+player.setImage(l_images[l_track]);
+if(l_track == 7){
+l_track = 0;
+}
+if(l_track >= 8){
+player.setImage("Images/l_jump.png");
+}
+}); //end Left key
+
+//Jumping Code
+sjs.keyDown(UP_KEY, function(){
+player.pushUp(30);
+if(r_facing == true){
+player.setImage("Images/r_jump.png");
+r_track = 8;
+} else {
+player.setImage("Images/l_jump.png");
+l_track = 8
+}
+}); //end keyDown function
+
+window.addEventListener("keyup", function(e){
+if(e.keyCode == RIGHT_KEY){
+player.setImage("Images/r_idle.png");
+r_track = 0
+} else if (e.keyCode == LEFT_KEY){
+player.setImage("Images/l_idle.png");
+l_track = 0;
+} //end if statement
+}); //end EventListener function
+
+sjs.keyDown(DOWN_KEY, function(){
+if(canShoot == true){
+canShoot = false;
+var laser = new sjs.Image("Images/laser.png");
+laser.type = "laser";
+laser.setSize(100,50);
+laser.friction= 0;
+laser.noBounds= true;
+if(r_facing == true){
+laser.moveTo(player.getX()+44,player.getY()+7);
+laser.pushRight(25.5);
+} else {
+laser.moveTo(player.getX()+-60,player.getY()+7);
+laser.pushLeft(25.5);
+}
+setTimeout(function(){
+canShoot = true;
+},2000);
+} //end canShoot if statement
+}); //end keyDown function DOWN_
+
+sjs.keyDown(B_KEY, function(){
+if(canShoot == true){
+canShoot = false;
+var laser = new sjs.Image("Images/laser.png");
+laser.type = "laser";
+laser.setSize(100,50);
+laser.friction= 0;
+laser.noBounds= true;
+if(r_facing == true){
+laser.moveTo(player2.getX()+44,player2.getY()+7);
+laser.pushRight(25.5);
+} else {
+laser.moveTo(player2.getX()+-60,player2.getY()+7);
+laser.pushLeft(25.5);
+}
+setTimeout(function(){
+canShoot = true;
+},2000);
+} //end canShoot if statement
+}); //end keyDown function B_
+
+//Player2 Properties
+var player2 = new sjs.Image("Images/r_idle2.png");
+player2.type = "player2";
+player2.setSize(85,93);
+player2.setGravity(3);
+player2.bottom();
+player2.friction = .3;
+sjs.scrollable(player2,background);
+
+//Player2 movement controls
+var player2 = new sjs.Image("Images/r_idle2.png");
+player2.type = "player2";
+player2.setSize(85,93);
+player2.setGravity(3);
+player2.bottom();
+player2.friction = .3;
+sjs.scrollable(player2,background);
+
+//Player2 movement controls
+var r_images = ["Images/r_walk-0.png", "Images/r_walk-1.png", "Images/r_walk-2.png", "Images/r_walk-3.png", "Images/r_walk-4.png", "Images/r_walk-5.png", "Images/r_walk-6.png", "Images/r_walk-7.png"];
+
+var l_images = ["Images/l_walk-0.png", "Images/l_walk-1.png", "Images/l_walk-2.png", "Images/l_walk-3.png", "Images/l_walk-4.png", "Images/l_walk-5.png", "Images/l_walk-6.png", "Images/l_walk-7.png"];
+
+var r_facing = true;
+var r_track = 0;
+var l_track = 0;
+
+sjs.keyDown(J_KEY, function(){
+r_facing = true;
+r_track = r_track + 1;
+player2.pushRight(2);
+player2.setImage(r_images[r_track]);
+if(r_track == 7){
+r_track = 0;
+}
+if(r_track >= 8){
+player2.setImage("Images/r_jump.png");
+}
+}); //end Right key
+
+sjs.keyDown(F_KEY, function(){
+r_facing = false;
+l_track = l_track + 1
+player2.pushLeft(2);
+player2.setImage(l_images[l_track]);
+if(l_track == 7){
+l_track = 0;
+}
+if(l_track >= 8){
+player2.setImage("Images/l_jump.png");
+}
+}); //end Left key
+
+//Jumping Code
+var canJump = true;
+sjs.keyDown(Y_KEY, function(){
+if(canJump == true){
+canJump = false;
+player2.pushUp(50);
+} //end if statement
+if(r_facing == true){
+player2.setImage("Images/r_jump.png");
+r_track = 8;
+} else {
+player2.setImage("Images/l_jump.png");
+l_track = 8
+}
+}); //end keyDown function
+
+window.addEventListener("keyup", function(e){
+if(e.keyCode == J_KEY){
+player2.setImage("Images/r_idle.png");
+r_track = 0
+} else if (e.keyCode == F_KEY){
+player2.setImage("Images/l_idle.png");
+l_track = 0;
+} //end if statement
+}); //end EventListener function
+
+
+//onHit functions
+sjs.onHit("player","platform", function(x,y){
+sjs.stoppedBy(x,y);
+if(canJump == false && x.y < y.y-85){
+canJump = true;
+r_track = 0;
+l_track = 0;
+}
+});
+
+sjs.onHit("gunenemy","bottom_screen", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("gunenemy",["left_screen","right_screen"], function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("gunenemy","platform", function(x,y){
+if(x.isAboveOf(y) == true){
+sjs.stoppedBy(x,y);
+} else {
+sjs.bounceOff(x,y);
+}
+});
+
+sjs.onHit("player","bouncy", function(x,y){
+player.pushUp(10);
+});
+
+sjs.onHit("player2","bouncy", function(x,y){
+player.pushUp(10);
+});
+
+sjs.onHit("player","gunenemy", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player2","gunenemy", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player2","spikes", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("tank","bottom_screen", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("tank",["left_screen","right_screen"], function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("player","spikes", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player",["player","tank"], function(x,y){
+player.pushUp(50);
+});
+
+sjs.onHit("player2",["player2","tank"], function(x,y){
+player2.pushUp(50);
+});
+
+sjs.onHit("player","spike", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player","lava", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player2","lava", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player2","spike", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player","bouncy", function(x,y){
+player.pushUp(10);
+});
+
+sjs.onHit("player2","bouncy", function(x,y){
+player.pushUp(10);
+});
+
+sjs.onHit("player","block", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("player2","block", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("player2","platform", function(x,y){
+sjs.stoppedBy(x,y);
+if(canJump == false && x.y < y.y-85){
+canJump = true;
+r_track = 0;
+l_track = 0;
+}
+});
+
+sjs.onHit("player","spike", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player2","spike", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("enemy","bottom_screen", function(x,y){
+sjs.stoppedBy(x,y);
+});
+
+sjs.onHit("enemy",["left_screen","right_screen"], function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("enemy","platform", function(x,y){
+if(x.isAboveOf(y) == true){
+sjs.stoppedBy(x,y);
+} else {
+sjs.bounceOff(x,y);
+}
+});
+
+sjs.onHit("player","jump_pad", function(x,y){
+if(x.isAboveOf(y) == true){
+player.pushUp(50);
+} else {
+sjs.stoppedBy(x,y);
+}
+});
+
+sjs.onHit("player","enemy", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("player2","jump_pad", function(x,y){
+if(x.isAboveOf(y) == true){
+player2.pushUp(50);
+} else {
+sjs.stoppedBy(x,y);
+}
+});
+
+sjs.onHit("player2","enemy", function(x,y){
+x.destroy();
+window.location = "gameover.html";
+});
+
+sjs.onHit("laser","enemy", function(x,y){
+x.destroy();
+y.destroy();
+});
+
+sjs.onHit("laser",["platform","jump_pad", "powerUp","score","flag"], function(x,y){
+sjs.bounceOff(x,y);
+});
+
+sjs.onHit("laser",["right_screen","left_screen"], function(x,y){
+x.destroy();
+});
+
+sjs.onHit("player","bottom_screen",function(x,y){
+sjs.stoppedBy(x,y);
+if(canJump == false){
+canJump = true;
+r_track = 0;
+l_track = 0;
+}
+});
+
+sjs.onHit("player2","bottom_screen",function(x,y){
+sjs.stoppedBy(x,y);
+if(canJump == false){
+canJump = true;
+r_track = 0;
+l_track = 0;
+}
+});
+
+var canShoot = false;
+sjs.onHit("player","powerUp", function(x,y){
+canShoot = true;
+y.destroy();
+});
+
+var canShoot = false;
+sjs.onHit("player2","powerUp", function(x,y){
+canShoot = true;
+y.destroy();
+});
+
+var score = 0;
+var score_txt = new sjs.Text("Score: 0", 21, "green");
+score_txt.right().offset(-20, 0);
+score_txt.fixed = true;
+sjs.onHit(["player","player2"],"score", function(x,y){
+score = score + 1;
+score_txt.setText("Score :"+ score);
+localStorage.setItem("score", score);
+y.destroy();
+});
+
+var flagOn = true;
+sjs.onHit("player","flag", function(x,y){
+x.stop();
+if(flagOn == true){
+flagOn = false;
+setTimeout(function(){
+y.setImage("Images/flag_none.png");
+},800 );
+setTimeout(function(){
+y.setImage("Images/flag_win.png");
+},1600 );
+setTimeout(function(){
+window.location = "level2.html";
+},2400 );
+} //end if statement
+});
+
+sjs.onHit("player",["right_screen","left_screen","top_screen"],function(x,y){
+sjs.stoppedBy(x,y);
+player.noBounds = true;
+});
+
+sjs.onHit("player2",["right_screen","left_screen","top_screen"],function(x,y){
+sjs.stoppedBy(x,y);
+player2.noBounds = true;
+});
+
+} //end start
+
+</script>
+
+</script>
+</head>
+<body onload="start()">
+<h1> Platform Game </h1>
+
+<div id="target" style="margin:auto;background:grey;"></div>
+</body>
+</html>
